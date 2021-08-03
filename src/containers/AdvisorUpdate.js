@@ -234,6 +234,13 @@ const AdvisorUpdate = ({ match }) => {
           Update opening hours
         </Button>
       </Paper>
+      <Paper title="Performance">
+        <p>
+          # of reach-outs within SLA time / # of reach-outs within SLA + # of
+          leads lost outside of working hours = x%
+        </p>
+        <p>Bonus entitlement</p>
+      </Paper>
       <Paper title="Offboard advisor">
         <Button
           variant="contained"
