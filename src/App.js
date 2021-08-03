@@ -1,24 +1,57 @@
-import logo from './logo.svg';
-import './App.css';
+import { AdvisorContextProvider, LeadContextProvider } from "./context";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import Home from "./containers/Home";
+import AdvisorList from "./containers/AdvisorList";
+import AdvisorCreate from "./containers/AdvisorCreate";
+import AdvisorUpdate from "./containers/AdvisorUpdate";
+import LeadList from "./containers/LeadList";
+import LeadUpdate from "./containers/LeadUpdate";
+import Header from "./components/Header";
+import Container from "@material-ui/core/Container";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles((theme) => ({
+  container: {
+    padding: theme.spacing(3, 3),
+    backgroundColor: "red",
+  },
+}));
 
 function App() {
+  const classes = useStyles();
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <AdvisorContextProvider>
+      <LeadContextProvider>
+        <Router>
+          <CssBaseline />
+          <Header />
+          <Container classes={classes.container}>
+            <Switch>
+              <Route path="/advisors/add-advisor">
+                <AdvisorCreate />
+              </Route>
+              <Route path="/advisors/:id">
+                <AdvisorUpdate />
+              </Route>
+              <Route path="/advisors">
+                <AdvisorList />
+              </Route>
+              <Route path="/leads/:id">
+                <LeadUpdate />
+              </Route>
+              <Route path="/leads">
+                <LeadList />
+              </Route>
+              <Route path="/">
+                <Home />
+              </Route>
+            </Switch>
+          </Container>
+        </Router>
+      </LeadContextProvider>
+    </AdvisorContextProvider>
   );
 }
 
