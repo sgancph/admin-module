@@ -1,17 +1,8 @@
 import { useState } from "react";
-import Paper from "@material-ui/core/Paper";
 import AdvisorForm from "../components/AdvisorForm";
-import Title from "../components/Title";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-  },
-}));
+import Paper from "../components/Paper";
 
 const AdvisorCreate = () => {
-  const classes = useStyles();
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [agentCode, setAgentCode] = useState("");
@@ -22,6 +13,7 @@ const AdvisorCreate = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
+  const [supervisor, setSupervisor] = useState("");
   const [image, setImage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const handleClickOpen = () => setIsOpen(true);
@@ -29,8 +21,7 @@ const AdvisorCreate = () => {
   const isDisabled = !firstName;
 
   return (
-    <Paper className={classes.paper}>
-      <Title>Onboard advisor</Title>
+    <Paper title="Onboard advisor">
       <AdvisorForm
         firstName={firstName}
         setFirstName={setFirstName}
@@ -52,6 +43,8 @@ const AdvisorCreate = () => {
         setEmail={setEmail}
         bio={bio}
         setBio={setBio}
+        supervisor={supervisor}
+        setSupervisor={setSupervisor}
         image={image}
         setImage={setImage}
         isDisabled={isDisabled}

@@ -1,9 +1,21 @@
+export const supervisors = [
+  "Harry",
+  "Lily",
+  "James",
+  "Ron",
+  "Sirius",
+  "Albus",
+  "Hermione",
+  "Seamus",
+];
+
 export const advisorsList = [
   {
     id: 1,
     firstName: "Amy",
     lastName: "Liu",
     agentCode: "xxxx",
+    supervisor: supervisors[0],
     createdAt: new Date(),
   },
   {
@@ -11,6 +23,7 @@ export const advisorsList = [
     firstName: "Brian",
     lastName: "XX",
     agentCode: "xxxx",
+    supervisor: supervisors[3],
     createdAt: new Date(),
   },
 ];
@@ -95,6 +108,19 @@ export const leadsList = [
       { lifecycleStage: "Sales Closed", start: "xx", end: "yy" },
     ],
   },
+];
+
+export const timeOptions = [
+  "1.00 am",
+  "1.15 am",
+  "1.30 am",
+  "1.45 am",
+  "2.00 am",
+  "2.15 am",
+  "2.30 am",
+  "2.45 am",
+  "3.00 am",
+  "3.15 am",
 ];
 
 export const lifecycleStageOptions = [

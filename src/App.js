@@ -13,8 +13,7 @@ import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
   container: {
-    padding: theme.spacing(3, 3),
-    backgroundColor: "red",
+    padding: theme.spacing(3, 0),
   },
 }));
 
@@ -27,7 +26,7 @@ function App() {
         <Router>
           <CssBaseline />
           <Header />
-          <Container classes={classes.container}>
+          <Container className={classes.container}>
             <Switch>
               <Route path="/advisors/add-advisor">
                 <AdvisorCreate />

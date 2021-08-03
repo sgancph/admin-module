@@ -4,7 +4,7 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import Modal from "./Modal";
-import { countryCodeOptions } from "../data";
+import { countryCodeOptions, supervisors } from "../data";
 
 const getSequence = (start, end) =>
   Array.from({ length: end - start }, (_, i) => i + start + 1);
@@ -33,20 +33,11 @@ const AdvisorCreate = ({
   setBio,
   image,
   setImage,
+  supervisor,
+  setSupervisor,
   isDisabled,
   submitTitle,
 }) => {
-  //   const [firstName, setFirstName] = useState("");
-  //   const [lastName, setLastName] = useState("");
-  //   const [agentCode, setAgentCode] = useState("");
-  //   const [gender, setGender] = useState("");
-  //   const [masRepNumber, setMasRepNumber] = useState("");
-  //   const [yearJoinedIncome, setYearJoinedIncome] = useState("");
-  //   const [phoneCountryCode, setPhoneCountryCode] = useState("65");
-  //   const [phoneNumber, setPhoneNumber] = useState("");
-  //   const [email, setEmail] = useState("");
-  //   const [bio, setBio] = useState("");
-  //   const [image, setImage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const handleClickOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
@@ -60,7 +51,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={firstName}
           onChange={(event) => setFirstName(event.target.value)}
         />
@@ -69,7 +60,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={lastName}
           onChange={(event) => setLastName(event.target.value)}
         />
@@ -78,7 +69,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={agentCode}
           onChange={(event) => setAgentCode(event.target.value)}
         />
@@ -88,7 +79,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={gender}
           onChange={(event) => setGender(event.target.value)}
         >
@@ -103,7 +94,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={masRepNumber}
           onChange={(event) => setMasRepNumber(event.target.value)}
         />
@@ -113,7 +104,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={yearJoinedIncome}
           onChange={(event) => setYearJoinedIncome(event.target.value)}
         >
@@ -125,11 +116,27 @@ const AdvisorCreate = ({
         </TextField>
         <TextField
           select
+          label="Supervisor"
+          variant="outlined"
+          size="small"
+          fullWidth
+          margin="normal"
+          value={supervisor}
+          onChange={(event) => setSupervisor(event.target.value)}
+        >
+          {supervisors.map((supervisor, i) => (
+            <MenuItem key={i} value={supervisor}>
+              {supervisor}
+            </MenuItem>
+          ))}
+        </TextField>
+        <TextField
+          select
           label="Country Code"
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={phoneCountryCode}
           onChange={(event) => setPhoneCountryCode(event.target.value)}
         >
@@ -144,7 +151,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={phoneNumber}
           onChange={(event) => setPhoneNumber(event.target.value)}
         />
@@ -153,7 +160,7 @@ const AdvisorCreate = ({
           variant="outlined"
           size="small"
           fullWidth
-          margin="dense"
+          margin="normal"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
         />
@@ -164,7 +171,7 @@ const AdvisorCreate = ({
           multiline
           rows={4}
           fullWidth
-          margin="dense"
+          margin="normal"
           value={bio}
           onChange={(event) => setBio(event.target.value)}
         />

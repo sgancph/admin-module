@@ -1,5 +1,4 @@
-import { useState, useEffect } from "react";
-import Paper from "@material-ui/core/Paper";
+import { useState, useEffect, useContext } from "react";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -9,35 +8,16 @@ import TableRow from "@material-ui/core/TableRow";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
+import { Switch } from "@material-ui/core";
 import Modal from "../components/Modal";
 import DeleteIcon from "@material-ui/icons/Delete";
+import { AdvisorContext } from "../context";
 import AdvisorForm from "../components/AdvisorForm";
-import Title from "../components/Title";
-import { Switch } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import Paper from "../components/Paper";
+import { timeOptions } from "../data";
 
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(3),
-  },
-}));
-
-const timeOptions = [
-  "1.00 am",
-  "1.15 am",
-  "1.30 am",
-  "1.45 am",
-  "2.00 am",
-  "2.15 am",
-  "2.30 am",
-  "2.45 am",
-  "3.00 am",
-  "3.15 am",
-];
-
-const AdvisorUpdate = () => {
-  const classes = useStyles();
+const AdvisorUpdate = ({ match }) => {
+  const { advisors, isLoading, setAdvisors } = useContext(AdvisorContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [agentCode, setAgentCode] = useState("");
@@ -49,13 +29,22 @@ const AdvisorUpdate = () => {
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const [image, setImage] = useState("");
+  const [supervisor, setSupervisor] = useState("");
   const [temporaryLeave, setTemporaryLeave] = useState([]);
   const [openingHours, setOpeningHours] = useState([]);
   const [isOpen, setIsOpen] = useState(false);
+  const isDisabled = !firstName;
   const handleClickOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
-  const isDisabled = !firstName;
   const onClickUpdateOpeningHours = () => {};
+
+  const advisorId = 32;
+
+  useEffect(() => {
+    // Fill variables
+    setFirstName("");
+    setLastName("");
+  }, []);
 
   useEffect(() => {
     setTemporaryLeave([
@@ -70,8 +59,7 @@ const AdvisorUpdate = () => {
 
   return (
     <>
-      <Paper className={classes.paper}>
-        <Title>Update advisor</Title>
+      <Paper title="Update advisor">
         <AdvisorForm
           firstName={firstName}
           setFirstName={setFirstName}
@@ -93,6 +81,8 @@ const AdvisorUpdate = () => {
           setEmail={setEmail}
           bio={bio}
           setBio={setBio}
+          supervisor={supervisor}
+          setSupervisor={setSupervisor}
           image={image}
           setImage={setImage}
           isDisabled={isDisabled}
@@ -105,8 +95,7 @@ const AdvisorUpdate = () => {
           submitTitle="Update advisor"
         />
       </Paper>
-      <Paper className={classes.paper}>
-        <Title>Temporary leave</Title>
+      <Paper title="Temporary leave">
         <TableContainer>
           <Table size="small">
             <TableHead>
@@ -172,8 +161,7 @@ const AdvisorUpdate = () => {
           </Table>
         </TableContainer>
       </Paper>
-      <Paper className={classes.paper}>
-        <Title>Opening hours</Title>
+      <Paper title="Opening hours">
         <TableContainer>
           <Table size="small">
             <TableHead>
@@ -246,8 +234,7 @@ const AdvisorUpdate = () => {
           Update opening hours
         </Button>
       </Paper>
-      <Paper className={classes.paper}>
-        <Title>Offboard advisor</Title>
+      <Paper title="Offboard advisor">
         <Button
           variant="contained"
           color="secondary"

@@ -15,7 +15,7 @@ const AdvisorContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AdvisorContext.Provider value={{ advisors, isLoading }}>
+    <AdvisorContext.Provider value={{ advisors, isLoading, setAdvisors }}>
       {children}
     </AdvisorContext.Provider>
   );
@@ -32,7 +32,7 @@ const LeadContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <LeadContext.Provider value={{ leads, isLoading }}>
+    <LeadContext.Provider value={{ leads, isLoading, setLeads }}>
       {children}
     </LeadContext.Provider>
   );

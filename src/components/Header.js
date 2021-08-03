@@ -8,7 +8,6 @@ import { makeStyles } from "@material-ui/core/styles";
 const useStyles = makeStyles((theme) => ({
   appBar: {
     borderBottom: `1px solid ${theme.palette.divider}`,
-    marginBottom: theme.spacing(3),
   },
   toolbar: {
     flexWrap: "wrap",

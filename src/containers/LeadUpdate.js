@@ -7,44 +7,34 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import formatDistance from "date-fns/formatDistance";
 import { AdvisorContext, LeadContext } from "../context";
-import Title from "../components/Title";
+import Paper from "../components/Paper";
 import Modal from "../components/Modal";
-import { makeStyles } from "@material-ui/core/styles";
-
-const useStyles = makeStyles((theme) => ({
-  paper: {
-    padding: theme.spacing(2),
-    marginBottom: theme.spacing(3),
-  },
-}));
 
 const LeadUpdate = () => {
-  const classes = useStyles();
   const { leads, isLoading: isLoadingLeads } = useContext(LeadContext);
   const { advisors, isLoading: isLoadingAdvisors } = useContext(AdvisorContext);
   const lead = leads[0];
   const [isOpen, setIsOpen] = useState(false);
   const handleClickOpen = () => setIsOpen(true);
   const handleClose = () => setIsOpen(false);
+  const leadId = 32;
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // Fill variables
+  }, []);
 
   if (isLoadingLeads || isLoadingAdvisors) {
     return <p>Loading...</p>;
   }
 
-  const leadId = 32;
-
   return (
     <>
-      <Paper className={classes.paper}>
+      <Paper title="Identify lead">
         <div>
-          <Title>Identify lead</Title>
           <TextField
             label="Lead ID"
             InputProps={{
@@ -57,7 +47,7 @@ const LeadUpdate = () => {
             variant="outlined"
             fullWidth
             size="small"
-            margin="dense"
+            margin="normal"
             value={leadId}
             disabled
           />
@@ -71,8 +61,7 @@ const LeadUpdate = () => {
           </p>
         </div>
       </Paper>
-      <Paper className={classes.paper}>
-        <Title>Lifecycle stage</Title>
+      <Paper title="Lifecycle stage">
         <TableContainer>
           <Table>
             <TableHead>
@@ -86,7 +75,7 @@ const LeadUpdate = () => {
             </TableHead>
             <TableBody>
               {lead.lifecycleStages.map((lifecycleStage, i) => (
-                <TableRow hover>
+                <TableRow key={i} hover>
                   <TableCell>{lifecycleStage.lifecycleStage}</TableCell>
                   <TableCell>{lifecycleStage.start}</TableCell>
                   <TableCell>{lifecycleStage.end}</TableCell>
@@ -100,15 +89,14 @@ const LeadUpdate = () => {
           </Table>
         </TableContainer>
       </Paper>
-      <Paper className={classes.paper}>
-        <Title>Reassign lead</Title>
+      <Paper title="Reassign lead">
         <form>
           <TextField
             select
             label="Advisor"
             variant="outlined"
             size="small"
-            margin="dense"
+            margin="normal"
             fullWidth
             value={lead.advisorId}
             onChange={(event) => handleClickOpen()}

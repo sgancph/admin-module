@@ -5,7 +5,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "@material-ui/core/Paper";
+import Paper from "../components/Paper";
 import Link from "../components/Link";
 import formatDistance from "date-fns/formatDistance";
 import { lifecycleStageOptions } from "../data";
@@ -19,8 +19,8 @@ const LeadList = () => {
   }
 
   return (
-    <>
-      <TableContainer component={Paper}>
+    <Paper title="Leads">
+      <TableContainer>
         <Table size="small">
           <TableHead>
             <TableRow>
@@ -58,7 +58,7 @@ const LeadList = () => {
           </TableBody>
         </Table>
       </TableContainer>
-    </>
+    </Paper>
   );
 };
 
