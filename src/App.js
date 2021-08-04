@@ -31,13 +31,13 @@ function App() {
               <Route path="/advisors/add-advisor">
                 <AdvisorCreate />
               </Route>
-              <Route path="/advisors/:id">
+              <Route path="/advisors/:advisorId">
                 <AdvisorUpdate />
               </Route>
               <Route path="/advisors">
                 <AdvisorList />
               </Route>
-              <Route path="/leads/:id">
+              <Route path="/leads/:leadId">
                 <LeadUpdate />
               </Route>
               <Route path="/leads">

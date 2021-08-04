@@ -19,8 +19,9 @@ const useStyles = makeStyles((theme) => ({
 
 const Home = () => {
   const classes = useStyles();
-  const { advisors, isLoading: isLoadingAdvisors } = useContext(AdvisorContext);
-  const { leads, isLoading: isLoadingLeads } = useContext(LeadContext);
+  const { advisorsById, isLoading: isLoadingAdvisors } =
+    useContext(AdvisorContext);
+  const { leadsById, isLoading: isLoadingLeads } = useContext(LeadContext);
 
   if (isLoadingAdvisors || isLoadingLeads) {
     return <p>Loading...</p>;
@@ -31,7 +32,8 @@ const Home = () => {
       <Paper className={classes.paper}>
         <Title>General statistics</Title>
         <p>
-          {leads.length} leads, {advisors.length} advisors
+          {Object.keys(leadsById).length} leads and{" "}
+          {Object.keys(advisorsById).length} advisors
         </p>
       </Paper>
       <Paper className={classes.paper}>

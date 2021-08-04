@@ -1,4 +1,3 @@
-import { useState } from "react";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
@@ -36,12 +35,11 @@ const AdvisorCreate = ({
   supervisor,
   setSupervisor,
   isDisabled,
+  isOpen,
+  handleClickOpen,
+  handleClose,
   submitTitle,
 }) => {
-  const [isOpen, setIsOpen] = useState(false);
-  const handleClickOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
-
   return (
     <>
       <form noValidate autoComplete="off">
@@ -140,9 +138,10 @@ const AdvisorCreate = ({
           value={phoneCountryCode}
           onChange={(event) => setPhoneCountryCode(event.target.value)}
         >
-          {Object.keys(countryCodeOptions).map((countryCodeOption, i) => (
-            <MenuItem key={i} value={countryCodeOption}>
-              {countryCodeOptions[countryCodeOption]}
+          {countryCodeOptions.map((countryCodeOption, i) => (
+            <MenuItem key={i} value={countryCodeOption.dial_code}>
+              {countryCodeOption.flag} {countryCodeOption.name} (
+              {countryCodeOption.dial_code})
             </MenuItem>
           ))}
         </TextField>

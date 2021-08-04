@@ -9,15 +9,14 @@ const AdvisorCreate = () => {
   const [gender, setGender] = useState("");
   const [masRepNumber, setMasRepNumber] = useState("");
   const [yearJoinedIncome, setYearJoinedIncome] = useState("");
-  const [phoneCountryCode, setPhoneCountryCode] = useState("65");
+  const [phoneCountryCode, setPhoneCountryCode] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
   const [supervisor, setSupervisor] = useState("");
   const [image, setImage] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const handleClickOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
+  const handleToggle = () => setIsOpen(!isOpen);
   const isDisabled = !firstName;
 
   return (
@@ -49,7 +48,7 @@ const AdvisorCreate = () => {
         setImage={setImage}
         isDisabled={isDisabled}
         isOpen={isOpen}
-        handleClose={handleClose}
+        handleToggle={handleToggle}
         title="Onboard advisor"
         text="Are you sure you want to add advisor X to the platform?"
         yesLabel="Yes, I want to add the advisor"

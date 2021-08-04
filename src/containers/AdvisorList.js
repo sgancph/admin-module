@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AdvisorContext } from "../context";
+import { Link as LinkRouter } from "react-router-dom";
 import Link from "../components/Link";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
@@ -12,7 +13,7 @@ import Paper from "../components/Paper";
 import formatDistance from "date-fns/formatDistance";
 
 const AdvisorList = () => {
-  const { advisors, isLoading } = useContext(AdvisorContext);
+  const { advisorsById, isLoading } = useContext(AdvisorContext);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -33,7 +34,7 @@ const AdvisorList = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {advisors.map((advisor, i) => (
+              {Object.values(advisorsById).map((advisor, i) => (
                 <TableRow key={i} hover>
                   <TableCell>
                     <Link to={`/advisors/${advisor.id}`}>
@@ -54,7 +55,7 @@ const AdvisorList = () => {
           </Table>
         </TableContainer>
         <Button
-          component={Link}
+          component={LinkRouter}
           to={`/advisors/add-advisor`}
           variant="contained"
           color="default"

@@ -1,4 +1,5 @@
 import { useState, useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Table from "@material-ui/core/Table";
@@ -7,6 +8,7 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import formatDistance from "date-fns/formatDistance";
@@ -15,20 +17,31 @@ import Paper from "../components/Paper";
 import Modal from "../components/Modal";
 
 const LeadUpdate = () => {
-  const { leads, isLoading: isLoadingLeads } = useContext(LeadContext);
-  const { advisors, isLoading: isLoadingAdvisors } = useContext(AdvisorContext);
-  const lead = leads[0];
+  const { leadId } = useParams();
+  const { leadsById, isLoading: isLoadingLeads } = useContext(LeadContext);
+  const { advisorsById, isLoading: isLoadingAdvisors } =
+    useContext(AdvisorContext);
+  const [advisorId, setAdvisorId] = useState("");
+  const [lifecycleStages, setLifecycleStages] = useState([]);
+  const lead = leadsById[leadId];
+
+  // Modal
   const [isOpen, setIsOpen] = useState(false);
-  const handleClickOpen = () => setIsOpen(true);
-  const handleClose = () => setIsOpen(false);
-  const leadId = 32;
+  const handleToggle = () => setIsOpen(!isOpen);
 
   useEffect(() => {
-    // Fill variables
-  }, []);
+    if (!!lead) {
+      setAdvisorId(lead.advisorId || "");
+      setLifecycleStages(lead.lifecycleStages || []);
+    }
+  }, [lead]);
 
   if (isLoadingLeads || isLoadingAdvisors) {
     return <p>Loading...</p>;
+  }
+
+  if (!lead) {
+    return <p>Lead not found!</p>;
   }
 
   return (
@@ -53,12 +66,17 @@ const LeadUpdate = () => {
           />
         </div>
         <div>
-          <p>Date created</p>
-          <p>
-            {formatDistance(lead.createdAt, new Date(), {
+          <TextField
+            label="Date created"
+            defaultValue={formatDistance(lead.createdAt, new Date(), {
               addSuffix: true,
             })}
-          </p>
+            variant="outlined"
+            fullWidth
+            size="small"
+            margin="normal"
+            disabled
+          />
         </div>
       </Paper>
       <Paper title="Lifecycle stage">
@@ -74,7 +92,7 @@ const LeadUpdate = () => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {lead.lifecycleStages.map((lifecycleStage, i) => (
+              {lifecycleStages.map((lifecycleStage, i) => (
                 <TableRow key={i} hover>
                   <TableCell>{lifecycleStage.lifecycleStage}</TableCell>
                   <TableCell>{lifecycleStage.start}</TableCell>
@@ -98,19 +116,22 @@ const LeadUpdate = () => {
             size="small"
             margin="normal"
             fullWidth
-            value={lead.advisorId}
-            onChange={(event) => handleClickOpen()}
+            value={advisorId}
+            onChange={(event) => setAdvisorId(event.target.value)}
           >
-            {advisors.map((advisor, i) => (
-              <MenuItem key={i} value={advisor.id}>
-                {advisor.firstName} {advisor.lastName}
+            {Object.keys(advisorsById).map((advisorId, i) => (
+              <MenuItem key={i} value={advisorId}>
+                {`${advisorsById[advisorId].firstName} ${advisorsById[advisorId].lastName}`}
               </MenuItem>
             ))}
           </TextField>
+          <Button variant="contained" color="secondary" onClick={() => {}}>
+            Reassign lead
+          </Button>
         </form>
         <Modal
           isOpen={isOpen}
-          handleClose={handleClose}
+          handleToggle={handleToggle}
           title="Reassign lead to advisor"
           text="Are you sure you want to reassign lead X from advisor Y to advisor Z?"
           yesLabel="Yes, I want to reassign"

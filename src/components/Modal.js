@@ -7,7 +7,7 @@ import Button from "@material-ui/core/Button";
 
 const Modal = ({
   isOpen,
-  handleClose,
+  handleToggle,
   title,
   text,
   yesLabel = "Yes",
@@ -15,7 +15,7 @@ const Modal = ({
 }) => (
   <Dialog
     open={isOpen}
-    onClose={handleClose}
+    onClose={handleToggle}
     aria-labelledby="alert-dialog-title"
     aria-describedby="alert-dialog-description"
   >
@@ -26,10 +26,10 @@ const Modal = ({
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button onClick={handleClose} color="primary">
+      <Button onClick={handleToggle} color="primary">
         {yesLabel}
       </Button>
-      <Button onClick={handleClose} color="primary">
+      <Button onClick={handleToggle} color="primary">
         {noLabel}
       </Button>
     </DialogActions>

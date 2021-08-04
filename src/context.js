@@ -1,38 +1,42 @@
 import { createContext, useState, useEffect } from "react";
-import { advisorsList, leadsList } from "./data";
+import { advisors, leads } from "./data";
 
 const AdvisorContext = createContext(null);
 const LeadContext = createContext({});
 
 const AdvisorContextProvider = ({ children }) => {
-  const [advisors, setAdvisors] = useState([]);
+  const [advisorsById, setAdvisorsById] = useState({});
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    setAdvisors(advisorsList);
+    // Load from database
+    setAdvisorsById(advisors);
     setIsLoading(false);
   }, []);
 
   return (
-    <AdvisorContext.Provider value={{ advisors, isLoading, setAdvisors }}>
+    <AdvisorContext.Provider
+      value={{ advisorsById, isLoading, setAdvisorsById }}
+    >
       {children}
     </AdvisorContext.Provider>
   );
 };
 
 const LeadContextProvider = ({ children }) => {
-  const [leads, setLeads] = useState([]);
+  const [leadsById, setLeadsById] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     setIsLoading(true);
-    setLeads(leadsList);
+    // Load from database
+    setLeadsById(leads);
     setIsLoading(false);
   }, []);
 
   return (
-    <LeadContext.Provider value={{ leads, isLoading, setLeads }}>
+    <LeadContext.Provider value={{ leadsById, isLoading, setLeadsById }}>
       {children}
     </LeadContext.Provider>
   );

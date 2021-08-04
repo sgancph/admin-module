@@ -8,11 +8,10 @@ import TableRow from "@material-ui/core/TableRow";
 import Paper from "../components/Paper";
 import Link from "../components/Link";
 import formatDistance from "date-fns/formatDistance";
-import { lifecycleStageOptions } from "../data";
 import { LeadContext } from "../context";
 
 const LeadList = () => {
-  const { leads, isLoading } = useContext(LeadContext);
+  const { leadsById, isLoading } = useContext(LeadContext);
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -31,22 +30,12 @@ const LeadList = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {leads.map((lead, i) => (
+            {Object.values(leadsById).map((lead, i) => (
               <TableRow key={i} hover>
                 <TableCell>
                   <Link to={`/leads/${lead.id}`}>{lead.id}</Link>
                 </TableCell>
-                <TableCell>
-                  {lifecycleStageOptions
-                    .map((lifecycleStageOption, i) => (
-                      <span key={i}>
-                        {lifecycleStageOption.label}{" "}
-                        {lifecycleStageOption.value === lead.lifecycleStage &&
-                          "(active)"}
-                      </span>
-                    ))
-                    .reduce((prev, curr) => [prev, " -> ", curr])}
-                </TableCell>
+                <TableCell>{lead.lifecycleStage}</TableCell>
                 <TableCell>{lead.advisorId}</TableCell>
                 <TableCell>
                   {formatDistance(lead.createdAt, new Date(), {
