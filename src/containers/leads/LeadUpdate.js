@@ -12,9 +12,9 @@ import Button from "@material-ui/core/Button";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import formatDistance from "date-fns/formatDistance";
-import { AdvisorContext, LeadContext } from "../context";
-import Paper from "../components/Paper";
-import Modal from "../components/Modal";
+import { AdvisorContext, LeadContext } from "../../context";
+import Paper from "../../components/Paper";
+import Modal from "../../components/Modal";
 
 const LeadUpdate = () => {
   const { leadId } = useParams();

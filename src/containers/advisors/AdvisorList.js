@@ -1,7 +1,7 @@
 import { useContext } from "react";
-import { AdvisorContext } from "../context";
+import { AdvisorContext } from "../../context";
 import { Link as LinkRouter } from "react-router-dom";
-import Link from "../components/Link";
+import Link from "../../components/Link";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -9,7 +9,7 @@ import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Button from "@material-ui/core/Button";
-import Paper from "../components/Paper";
+import Paper from "../../components/Paper";
 import formatDistance from "date-fns/formatDistance";
 
 const AdvisorList = () => {

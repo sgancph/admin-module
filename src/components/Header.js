@@ -6,14 +6,16 @@ import Typography from "@material-ui/core/Typography";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles((theme) => ({
+  "@global": {
+    ".active": {
+      color: "red",
+    },
+  },
   appBar: {
     borderBottom: `1px solid ${theme.palette.divider}`,
   },
-  toolbar: {
-    flexWrap: "wrap",
-  },
   toolbarTitle: {
-    flexGrow: 1,
+    marginRight: theme.spacing(3),
   },
   link: {
     margin: theme.spacing(1, 1.5),
@@ -31,38 +33,17 @@ const Header = () => {
       className={classes.appBar}
     >
       <Toolbar className={classes.toolbar}>
-        <Typography
-          variant="h6"
-          color="inherit"
-          noWrap
-          className={classes.toolbarTitle}
-        >
+        <Typography variant="h6" noWrap className={classes.toolbarTitle}>
           Admin
         </Typography>
         <nav>
-          <Link
-            component={NavLink}
-            to="/"
-            exact
-            activeStyle={{ color: "red" }}
-            className={classes.link}
-          >
+          <Link component={NavLink} to="/" exact className={classes.link}>
             Home
           </Link>
-          <Link
-            component={NavLink}
-            to="/advisors"
-            activeStyle={{ color: "red" }}
-            className={classes.link}
-          >
+          <Link component={NavLink} to="/advisors" className={classes.link}>
             Advisors
           </Link>
-          <Link
-            component={NavLink}
-            to="/leads"
-            activeStyle={{ color: "red" }}
-            className={classes.link}
-          >
+          <Link component={NavLink} to="/leads" className={classes.link}>
             Leads
           </Link>
         </nav>

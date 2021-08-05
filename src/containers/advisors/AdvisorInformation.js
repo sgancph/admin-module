@@ -1,8 +1,12 @@
-import { useState } from "react";
-import AdvisorForm from "../components/AdvisorForm";
-import Paper from "../components/Paper";
+import { useState, useEffect, useContext } from "react";
+import { useParams } from "react-router-dom";
+import { AdvisorContext } from "../../context";
+import AdvisorForm from "../../components/AdvisorForm";
+import Paper from "../../components/Paper";
 
-const AdvisorCreate = () => {
+const AdvisorUpdate = () => {
+  const { advisorId } = useParams();
+  const { advisorsById, isLoading } = useContext(AdvisorContext);
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [agentCode, setAgentCode] = useState("");
@@ -13,14 +17,41 @@ const AdvisorCreate = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [email, setEmail] = useState("");
   const [bio, setBio] = useState("");
-  const [supervisor, setSupervisor] = useState("");
   const [image, setImage] = useState("");
+  const [supervisor, setSupervisor] = useState("");
+  const isDisabled = !firstName;
+  const advisor = advisorsById[advisorId];
+
+  // Modal
   const [isOpen, setIsOpen] = useState(false);
   const handleToggle = () => setIsOpen(!isOpen);
-  const isDisabled = !firstName;
+
+  useEffect(() => {
+    if (!!advisor) {
+      setFirstName(advisor.firstName || "");
+      setLastName(advisor.lastName || "");
+      setAgentCode(advisor.agentCode || "");
+      setGender(advisor.gender || "");
+      setMasRepNumber(advisor.masRepNumber || "");
+      setYearJoinedIncome(advisor.yearJoinedIncome || "");
+      setPhoneCountryCode(advisor.phoneCountryCode || "");
+      setPhoneNumber(advisor.phoneNumber || "");
+      setEmail(advisor.email || "");
+      setBio(advisor.bio || "");
+      setSupervisor(advisor.supervisor || "");
+    }
+  }, [advisor]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (!advisor) {
+    return <p>Advisor not found!</p>;
+  }
 
   return (
-    <Paper title="Onboard advisor">
+    <Paper title="Update advisor">
       <AdvisorForm
         firstName={firstName}
         setFirstName={setFirstName}
@@ -53,10 +84,10 @@ const AdvisorCreate = () => {
         text="Are you sure you want to add advisor X to the platform?"
         yesLabel="Yes, I want to add the advisor"
         noLabel="No"
-        submitTitle="Onboard advisor"
+        submitTitle="Update advisor"
       />
     </Paper>
   );
 };
 
-export default AdvisorCreate;
+export default AdvisorUpdate;

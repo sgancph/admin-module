@@ -5,10 +5,10 @@ import TableCell from "@material-ui/core/TableCell";
 import TableContainer from "@material-ui/core/TableContainer";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
-import Paper from "../components/Paper";
-import Link from "../components/Link";
+import Paper from "../../components/Paper";
+import Link from "../../components/Link";
 import formatDistance from "date-fns/formatDistance";
-import { LeadContext } from "../context";
+import { LeadContext } from "../../context";
 
 const LeadList = () => {
   const { leadsById, isLoading } = useContext(LeadContext);

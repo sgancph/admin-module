@@ -1,11 +1,11 @@
 import { AdvisorContextProvider, LeadContextProvider } from "./context";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/Home";
-import AdvisorList from "./containers/AdvisorList";
-import AdvisorCreate from "./containers/AdvisorCreate";
-import AdvisorUpdate from "./containers/AdvisorUpdate";
-import LeadList from "./containers/LeadList";
-import LeadUpdate from "./containers/LeadUpdate";
+import AdvisorList from "./containers/advisors/AdvisorList";
+import AdvisorCreate from "./containers/advisors/AdvisorCreate";
+import AdvisorUpdate from "./containers/advisors/AdvisorUpdate";
+import LeadList from "./containers/leads/LeadList";
+import LeadUpdate from "./containers/leads/LeadUpdate";
 import Header from "./components/Header";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
