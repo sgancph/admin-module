@@ -1,11 +1,18 @@
-import { AdvisorContextProvider, LeadContextProvider } from "./context";
+import {
+  UserContextProvider,
+  AdvisorContextProvider,
+  LeadContextProvider,
+} from "./context";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
 import Home from "./containers/Home";
+import Login from "./containers/users/Login";
 import AdvisorList from "./containers/advisors/AdvisorList";
 import AdvisorCreate from "./containers/advisors/AdvisorCreate";
 import AdvisorUpdate from "./containers/advisors/AdvisorUpdate";
 import LeadList from "./containers/leads/LeadList";
 import LeadUpdate from "./containers/leads/LeadUpdate";
+import NotFound from "./containers/NotFound";
+import AuthRoute from "./components/AuthRoute";
 import Header from "./components/Header";
 import Container from "@material-ui/core/Container";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -21,36 +28,44 @@ function App() {
   const classes = useStyles();
 
   return (
-    <AdvisorContextProvider>
-      <LeadContextProvider>
-        <Router>
-          <CssBaseline />
-          <Header />
-          <Container className={classes.container}>
-            <Switch>
-              <Route path="/advisors/add-advisor">
-                <AdvisorCreate />
-              </Route>
-              <Route path="/advisors/:advisorId">
-                <AdvisorUpdate />
-              </Route>
-              <Route path="/advisors">
-                <AdvisorList />
-              </Route>
-              <Route path="/leads/:leadId">
-                <LeadUpdate />
-              </Route>
-              <Route path="/leads">
-                <LeadList />
-              </Route>
-              <Route path="/">
-                <Home />
-              </Route>
-            </Switch>
-          </Container>
-        </Router>
-      </LeadContextProvider>
-    </AdvisorContextProvider>
+    <UserContextProvider>
+      <AdvisorContextProvider>
+        <LeadContextProvider>
+          <Router>
+            <CssBaseline />
+            <Header />
+            <Container className={classes.container}>
+              <Switch>
+                <Route path="/login">
+                  <Login />
+                </Route>
+                <AuthRoute path="/advisors/add-advisor">
+                  <AdvisorCreate />
+                </AuthRoute>
+                <AuthRoute path="/advisors/:advisorId">
+                  <AdvisorUpdate />
+                </AuthRoute>
+                <AuthRoute path="/advisors">
+                  <AdvisorList />
+                </AuthRoute>
+                <AuthRoute path="/leads/:leadId">
+                  <LeadUpdate />
+                </AuthRoute>
+                <AuthRoute path="/leads">
+                  <LeadList />
+                </AuthRoute>
+                <AuthRoute path="/" exact>
+                  <Home />
+                </AuthRoute>
+                <AuthRoute>
+                  <NotFound />
+                </AuthRoute>
+              </Switch>
+            </Container>
+          </Router>
+        </LeadContextProvider>
+      </AdvisorContextProvider>
+    </UserContextProvider>
   );
 }
 

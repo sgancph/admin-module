@@ -1,8 +1,19 @@
 import { createContext, useState, useEffect } from "react";
 import { advisors, leads } from "./data";
 
+const UserContext = createContext(null);
 const AdvisorContext = createContext(null);
 const LeadContext = createContext({});
+
+const UserContextProvider = ({ children }) => {
+  const [user, setUser] = useState(null);
+
+  return (
+    <UserContext.Provider value={{ user, setUser }}>
+      {children}
+    </UserContext.Provider>
+  );
+};
 
 const AdvisorContextProvider = ({ children }) => {
   const [advisorsById, setAdvisorsById] = useState({});
@@ -43,6 +54,8 @@ const LeadContextProvider = ({ children }) => {
 };
 
 export {
+  UserContext,
+  UserContextProvider,
   AdvisorContext,
   AdvisorContextProvider,
   LeadContext,
