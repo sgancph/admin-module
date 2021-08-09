@@ -8,18 +8,21 @@ import { UserContext } from "../../context";
 const Login = () => {
   const history = useHistory();
   const { user, setUser } = useContext(UserContext);
-  const [userId, setUserId] = useState("");
-  const [password, setPassword] = useState("");
+  const [userId, setUserId] = useState("demo");
+  const [password, setPassword] = useState("demo");
   const [isLoggingIn, setIsLoggingIn] = useState(false);
   const isDisabled = isLoggingIn;
 
   const onSubmit = (event) => {
     event.preventDefault();
     setIsLoggingIn(true);
-    // Call database
-    setUser({ userId: 2 });
-    setIsLoggingIn(false);
-    history.push("/");
+    new Promise((resolve) => resolve())
+      .then(() => setUser({ token: "token" }))
+      .catch(console.log)
+      .finally(() => {
+        setIsLoggingIn(false);
+        history.push("/");
+      });
   };
 
   if (!!user) {

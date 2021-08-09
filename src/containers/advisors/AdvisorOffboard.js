@@ -8,8 +8,8 @@ import Paper from "../../components/Paper";
 
 const AdvisorUpdate = () => {
   const { advisorId } = useParams();
-  const { advisorsById, isLoading } = useContext(AdvisorContext);
-  const advisor = advisorsById[advisorId];
+  const { advisorState, dispatch } = useContext(AdvisorContext);
+  const advisor = advisorState.advisorsById[advisorId];
 
   // Modal
   const [isOpen, setIsOpen] = useState(false);
@@ -19,10 +19,6 @@ const AdvisorUpdate = () => {
     if (!!advisor) {
     }
   }, [advisor]);
-
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
 
   if (!advisor) {
     return <p>Advisor not found!</p>;

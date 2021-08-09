@@ -1,7 +1,6 @@
 import TextField from "@material-ui/core/TextField";
 import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
-import CloudUploadIcon from "@material-ui/icons/CloudUpload";
 import Modal from "./Modal";
 import { countryCodeOptions, supervisors } from "../data";
 
@@ -39,10 +38,13 @@ const AdvisorCreate = ({
   handleClickOpen,
   handleClose,
   submitTitle,
+  submittingTitle,
+  onSubmit,
+  isSubmitting,
 }) => {
   return (
     <>
-      <form noValidate autoComplete="off">
+      <form noValidate autoComplete="off" onSubmit={onSubmit}>
         <TextField
           required
           label="First Name"
@@ -175,13 +177,12 @@ const AdvisorCreate = ({
           onChange={(event) => setBio(event.target.value)}
         />
         <Button
+          type="submit"
           variant="contained"
           color="primary"
-          startIcon={<CloudUploadIcon />}
-          onClick={handleClickOpen}
           disabled={isDisabled}
         >
-          {submitTitle}
+          {isSubmitting ? submittingTitle : submitTitle}
         </Button>
       </form>
       <Modal

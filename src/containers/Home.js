@@ -9,11 +9,11 @@ import TableRow from "@material-ui/core/TableRow";
 import { AdvisorContext, LeadContext } from "../context";
 
 const Home = () => {
-  const { advisorsById, isLoading: isLoadingAdvisors } =
-    useContext(AdvisorContext);
+  const { advisors } = useContext(AdvisorContext);
   const { leadsById, isLoading: isLoadingLeads } = useContext(LeadContext);
 
-  if (isLoadingAdvisors || isLoadingLeads) {
+  if (isLoadingLeads) {
+    // if (isLoadingAdvisors || isLoadingLeads) {
     return <p>Loading...</p>;
   }
 
@@ -22,7 +22,7 @@ const Home = () => {
       <Paper title="General statistics">
         <p>
           {Object.keys(leadsById).length} leads and{" "}
-          {Object.keys(advisorsById).length} advisors
+          {/* {Object.keys(advisorsById).length} advisors */}
         </p>
       </Paper>
       <Paper title="Funnel">

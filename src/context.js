@@ -1,5 +1,11 @@
-import { createContext, useState, useEffect } from "react";
-import { advisors, leads } from "./data";
+import { createContext, useState, useEffect, useReducer } from "react";
+import { leads } from "./data";
+import {
+  userReducer,
+  advisorReducer,
+  leadReducer,
+  initialStateAdvisor,
+} from "./reducers";
 
 const UserContext = createContext(null);
 const AdvisorContext = createContext(null);
@@ -16,20 +22,23 @@ const UserContextProvider = ({ children }) => {
 };
 
 const AdvisorContextProvider = ({ children }) => {
-  const [advisorsById, setAdvisorsById] = useState({});
-  const [isLoading, setIsLoading] = useState(true);
+  const [advisorState, dispatch] = useReducer(
+    advisorReducer,
+    initialStateAdvisor
+  );
 
-  useEffect(() => {
-    setIsLoading(true);
-    // Load from database
-    setAdvisorsById(advisors);
-    setIsLoading(false);
-  }, []);
+  // const [advisorsById, setAdvisorsById] = useState({});
+  // const [isLoading, setIsLoading] = useState(true);
+
+  // useEffect(() => {
+  //   setIsLoading(true);
+  //   // Load from database
+  //   setAdvisorsById(advisors);
+  //   setIsLoading(false);
+  // }, []);
 
   return (
-    <AdvisorContext.Provider
-      value={{ advisorsById, isLoading, setAdvisorsById }}
-    >
+    <AdvisorContext.Provider value={{ advisorState, dispatch }}>
       {children}
     </AdvisorContext.Provider>
   );

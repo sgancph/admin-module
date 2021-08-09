@@ -12,6 +12,8 @@ import { LeadContext } from "../../context";
 
 const LeadList = () => {
   const { leadsById, isLoading } = useContext(LeadContext);
+  const leads = Object.values(leadsById);
+  const numLeads = leads.length;
 
   if (isLoading) {
     return <p>Loading...</p>;
@@ -19,34 +21,37 @@ const LeadList = () => {
 
   return (
     <Paper title="Leads">
-      <TableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Lead ID</TableCell>
-              <TableCell>Lifecycle Stage</TableCell>
-              <TableCell>Advisor</TableCell>
-              <TableCell>Date Created</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {Object.values(leadsById).map((lead, i) => (
-              <TableRow key={i} hover>
-                <TableCell>
-                  <Link to={`/leads/${lead.id}`}>{lead.id}</Link>
-                </TableCell>
-                <TableCell>{lead.lifecycleStage}</TableCell>
-                <TableCell>{lead.advisorId}</TableCell>
-                <TableCell>
-                  {formatDistance(lead.createdAt, new Date(), {
-                    addSuffix: true,
-                  })}
-                </TableCell>
+      {!numLeads && <p>No advisors</p>}
+      {!!numLeads && (
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Lead ID</TableCell>
+                <TableCell>Lifecycle Stage</TableCell>
+                <TableCell>Advisor</TableCell>
+                <TableCell>Date Created</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
+            </TableHead>
+            <TableBody>
+              {leads.map((lead, i) => (
+                <TableRow key={i} hover>
+                  <TableCell>
+                    <Link to={`/leads/${lead.id}`}>{lead.id}</Link>
+                  </TableCell>
+                  <TableCell>{lead.lifecycleStage}</TableCell>
+                  <TableCell>{lead.advisorId}</TableCell>
+                  <TableCell>
+                    {formatDistance(lead.createdAt, new Date(), {
+                      addSuffix: true,
+                    })}
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+      )}
     </Paper>
   );
 };

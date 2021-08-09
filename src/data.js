@@ -19,6 +19,7 @@ export const advisors = {
     yearJoinedIncome: "2018",
     phoneCountryCode: "+49",
     supervisor: supervisors[0],
+    numLeads: 3,
     createdAt: new Date(),
   },
   2: {
@@ -30,6 +31,7 @@ export const advisors = {
     yearJoinedIncome: "2018",
     phoneCountryCode: "+46",
     supervisor: supervisors[3],
+    numLeads: 7,
     createdAt: new Date(),
   },
 };

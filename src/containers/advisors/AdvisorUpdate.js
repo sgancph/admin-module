@@ -1,4 +1,4 @@
-import { useEffect, useContext } from "react";
+import { useContext } from "react";
 import {
   Switch,
   Route,
@@ -31,15 +31,10 @@ const AdvisorUpdate = () => {
   const classes = useStyles();
   const { advisorId } = useParams();
   const { path, url } = useRouteMatch();
-  const { advisorsById, isLoading } = useContext(AdvisorContext);
-  const advisor = advisorsById[advisorId];
+  const { advisorState } = useContext(AdvisorContext);
+  const advisor = advisorState.advisorsById[advisorId];
 
-  useEffect(() => {
-    if (!!advisor) {
-    }
-  }, [advisor]);
-
-  if (isLoading) {
+  if (advisorState.isLoading) {
     return <p>Loading...</p>;
   }
 

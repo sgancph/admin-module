@@ -11,30 +11,34 @@ import MenuItem from "@material-ui/core/MenuItem";
 import Button from "@material-ui/core/Button";
 import { Switch } from "@material-ui/core";
 import { AdvisorContext } from "../../context";
+import { updateOpeningHours } from "../../reducers";
 import Paper from "../../components/Paper";
 import { timeOptions } from "../../data";
 
 const AdvisorUpdate = () => {
   const { advisorId } = useParams();
-  const { advisorsById, isLoading } = useContext(AdvisorContext);
+  const { advisorState, dispatch } = useContext(AdvisorContext);
+  const advisor = advisorState.advisorsById[advisorId];
   const [openingHours, setOpeningHours] = useState([]);
-  const advisor = advisorsById[advisorId];
-
-  // Modal
-  const onClickUpdateOpeningHours = () => {};
 
   useEffect(() => {
     if (!!advisor) {
-      setOpeningHours([
-        { start: "1.15 am", end: "2.00 am" },
-        { start: "2.15 am", end: "3.15 am" },
-      ]);
+      setOpeningHours(advisor.openingHours || []);
     }
   }, [advisor]);
 
-  if (isLoading) {
-    return <p>Loading...</p>;
-  }
+  // Submit
+  const [isUpdating, setIsUpdating] = useState(false);
+  const onUpdate = (event) => {
+    event.preventDefault();
+    setIsUpdating(true);
+    new Promise((resolve) => resolve())
+      .then(() => dispatch(updateOpeningHours(advisorId, openingHours)))
+      .catch(console.log)
+      .finally(() => {
+        setIsUpdating(false);
+      });
+  };
 
   if (!advisor) {
     return <p>Advisor not found!</p>;
@@ -42,77 +46,85 @@ const AdvisorUpdate = () => {
 
   return (
     <Paper title="Opening hours">
-      <TableContainer>
-        <Table size="small">
-          <TableHead>
-            <TableRow>
-              <TableCell>Weekday</TableCell>
-              <TableCell>Start Time</TableCell>
-              <TableCell>End Time</TableCell>
-              <TableCell>Enable</TableCell>
-            </TableRow>
-          </TableHead>
-          <TableBody>
-            {[
-              "Monday",
-              "Tuesday",
-              "Wednesday",
-              "Thursday",
-              "Friday",
-              "Saturday",
-              "Sunday",
-            ].map((day, i) => (
-              <TableRow key={i} hover>
-                <TableCell>{day}</TableCell>
-                <TableCell>
-                  <TextField
-                    label="Start time"
-                    select
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    value={!!openingHours[i] ? openingHours[i].start : ""}
-                    // onChange={(event) => {}}
-                  >
-                    {timeOptions.map((timeOption, i) => (
-                      <MenuItem key={i} value={timeOption}>
-                        {timeOption}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </TableCell>
-                <TableCell>
-                  <TextField
-                    label="End time"
-                    select
-                    variant="outlined"
-                    size="small"
-                    fullWidth
-                    value={!!openingHours[i] ? openingHours[i].end : ""}
-                    // onChange={(event) => {}}
-                  >
-                    {timeOptions.map((timeOption, i) => (
-                      <MenuItem key={i} value={timeOption}>
-                        {timeOption}
-                      </MenuItem>
-                    ))}
-                  </TextField>
-                </TableCell>
-                <TableCell>
-                  <Switch value={true} onChange={(event) => {}} />
-                </TableCell>
+      <form onSubmit={onUpdate}>
+        <TableContainer>
+          <Table size="small">
+            <TableHead>
+              <TableRow>
+                <TableCell>Weekday</TableCell>
+                <TableCell>Start Time</TableCell>
+                <TableCell>End Time</TableCell>
+                <TableCell>Enable</TableCell>
               </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={onClickUpdateOpeningHours}
-      >
-        Update opening hours
-      </Button>
+            </TableHead>
+            <TableBody>
+              {[
+                "Monday",
+                "Tuesday",
+                "Wednesday",
+                "Thursday",
+                "Friday",
+                "Saturday",
+                "Sunday",
+              ].map((day, i) => (
+                <TableRow key={i} hover>
+                  <TableCell>{day}</TableCell>
+                  <TableCell>
+                    <TextField
+                      label="Start time"
+                      select
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      value={!!openingHours[i] ? openingHours[i].start : ""}
+                      disabled={isUpdating}
+                      // onChange={(event) => {}}
+                    >
+                      {timeOptions.map((timeOption, i) => (
+                        <MenuItem key={i} value={timeOption}>
+                          {timeOption}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </TableCell>
+                  <TableCell>
+                    <TextField
+                      label="End time"
+                      select
+                      variant="outlined"
+                      size="small"
+                      fullWidth
+                      value={!!openingHours[i] ? openingHours[i].end : ""}
+                      disabled={isUpdating}
+                      // onChange={(event) => {}}
+                    >
+                      {timeOptions.map((timeOption, i) => (
+                        <MenuItem key={i} value={timeOption}>
+                          {timeOption}
+                        </MenuItem>
+                      ))}
+                    </TextField>
+                  </TableCell>
+                  <TableCell>
+                    <Switch
+                      value={!!openingHours[i] && openingHours[i].isEnabled}
+                      onChange={(event) => {}}
+                    />
+                  </TableCell>
+                </TableRow>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <Button
+          type="submit"
+          variant="contained"
+          color="primary"
+          disabled={isUpdating}
+        >
+          {isUpdating ? "Updating opening hours..." : "Update opening hours"}
+        </Button>
+      </form>
     </Paper>
   );
 };

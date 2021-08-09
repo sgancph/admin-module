@@ -19,8 +19,7 @@ import Modal from "../../components/Modal";
 const LeadUpdate = () => {
   const { leadId } = useParams();
   const { leadsById, isLoading: isLoadingLeads } = useContext(LeadContext);
-  const { advisorsById, isLoading: isLoadingAdvisors } =
-    useContext(AdvisorContext);
+  const { advisorState } = useContext(AdvisorContext);
   const [advisorId, setAdvisorId] = useState("");
   const [lifecycleStages, setLifecycleStages] = useState([]);
   const lead = leadsById[leadId];
@@ -36,7 +35,11 @@ const LeadUpdate = () => {
     }
   }, [lead]);
 
-  if (isLoadingLeads || isLoadingAdvisors) {
+  const onReassign = (event) => {
+    event.preventDefault();
+  };
+
+  if (isLoadingLeads) {
     return <p>Loading...</p>;
   }
 
@@ -108,7 +111,7 @@ const LeadUpdate = () => {
         </TableContainer>
       </Paper>
       <Paper title="Reassign lead">
-        <form>
+        <form onSubmit={onReassign}>
           <TextField
             select
             label="Advisor"
@@ -119,13 +122,18 @@ const LeadUpdate = () => {
             value={advisorId}
             onChange={(event) => setAdvisorId(event.target.value)}
           >
-            {Object.keys(advisorsById).map((advisorId, i) => (
-              <MenuItem key={i} value={advisorId}>
-                {`${advisorsById[advisorId].firstName} ${advisorsById[advisorId].lastName}`}
+            {Object.values(advisorState.advisorsById).map((advisor, i) => (
+              <MenuItem key={i} value={advisor.id}>
+                {`${advisor.firstName} ${advisor.lastName}`}
               </MenuItem>
             ))}
           </TextField>
-          <Button variant="contained" color="secondary" onClick={() => {}}>
+          <Button
+            type="submit"
+            variant="contained"
+            color="secondary"
+            onClick={() => {}}
+          >
             Reassign lead
           </Button>
         </form>
